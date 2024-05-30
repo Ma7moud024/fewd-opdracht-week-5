@@ -1,0 +1,22 @@
+form {
+  display: flex;
+  padding: 1em;
+}
+
+input[type="submit"] {
+  text-transform: capitalize;
+  font-size: 1em;
+  /* padding: .6rem; */
+  margin-left: 0.3rem;
+  border: 1px solid black;
+  border-radius: 3px;
+  background: white;
+}
+
+input[name="podcast-search"] {
+  border-radius: 5px;
+  border: 1px salmon solid;
+  padding: 0.3rem;
+  flex-grow: 1;
+  margin: -0.3rem 0 0 0.3rem;
+}
