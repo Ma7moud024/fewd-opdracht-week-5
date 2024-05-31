@@ -7,7 +7,6 @@ export default function PodcastRow({
 }) {
   const clickEpisode = (e) => {
     e.preventDefault();
-    console.log(episode);
     selectEpisode(episode);
     setActiveTitle(podcast);
   };
@@ -18,7 +17,7 @@ export default function PodcastRow({
       </td>
       <td>{podcast.title}</td>
       <td>{episode.pubDate}</td>
-      <td>{"★".repeat(rating) + "☆".repeat(5 - rating) || "☆☆☆☆☆"}</td>
+      <td>{'★'.repeat(rating) + '☆'.repeat(5 - rating) || '☆☆☆☆☆'}</td>
     </tr>
   );
 }
