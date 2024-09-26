@@ -9,5 +9,6 @@ export default {
   },
 };
 
-// More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Default = {};
+
+// probeer voor de story met invullen: await userEvent.type(searchInput, 'Search Query', {delay: 100});

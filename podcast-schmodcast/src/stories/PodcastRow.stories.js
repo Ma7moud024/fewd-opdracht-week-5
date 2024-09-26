@@ -11,31 +11,20 @@ export default {
   },
 };
 
+const title = 'Episode Title';
+
 export const EmptyPodcastRow = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const podcastrow = canvas.getByRole('option');
+    expect(podcastrow.innerHTML).toBe(title);
+  },
   args: {
     episode: {
-      title: ['Episode Title', ''],
+      title: [title, ''],
     },
     podcast: {
       title: 'Podcast title',
     },
-  },
-};
-
-// UITWERKING
-
-// spy to check if function was called
-const spyFn = fn(() => 0);
-
-export const PodcastRowWithEpisode = {
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    await userEvent.click(canvas.getByLabelText('rating'), { delay: 500 });
-    expect(spyFn).toBeCalled();
-  },
-  args: {
-    episode: episode,
-    podcast: podcast,
-    rate: spyFn,
   },
 };
