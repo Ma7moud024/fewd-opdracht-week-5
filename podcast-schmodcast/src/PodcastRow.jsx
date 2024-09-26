@@ -34,7 +34,9 @@ export default function PodcastRow({
   return (
     <tr>
       <td>
-        <a onClick={clickEpisode}>{episode.title[0]}</a>
+        <a role="option" onClick={clickEpisode}>
+          {episode.title[0]}
+        </a>
       </td>
       <td>{podcast.title}</td>
       <td>{episode.pubDate}</td>
