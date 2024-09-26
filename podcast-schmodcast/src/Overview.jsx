@@ -1,4 +1,4 @@
-import PodcastRow from "./PodcastRow";
+import PodcastRow from './PodcastRow';
 
 export default function Overview({
   podcasts,
@@ -6,6 +6,7 @@ export default function Overview({
   setActiveTitle,
   queryText,
   ratings,
+  rate,
 }) {
   return (
     <table>
@@ -21,22 +22,23 @@ export default function Overview({
         {Object.keys(podcasts).map((p) =>
           podcasts[p].channel.item
             .filter((i) =>
-              i.title[0].toUpperCase().includes(queryText.toUpperCase()),
+              i.title[0].toUpperCase().includes(queryText.toUpperCase())
             )
             .slice(0, 34)
             .map((e) => (
               <PodcastRow
                 selectEpisode={setActivePodcast}
                 setActiveTitle={setActiveTitle}
-                rating={ratings[e.mid] || null}
+                rating={ratings.find((rating) => e.guid == rating.guid)}
                 episode={e}
+                rate={rate}
                 key={e.mid}
                 podcast={{
                   title: podcasts[p].channel.title,
                   image: podcasts[p].channel.image[0],
                 }}
               />
-            )),
+            ))
         )}
       </tbody>
     </table>

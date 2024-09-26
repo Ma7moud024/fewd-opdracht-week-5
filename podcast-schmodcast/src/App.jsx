@@ -1,21 +1,31 @@
-import { useState } from "react";
-import "./App.css";
+import { useState } from 'react';
+import './App.css';
 
-import Player from "./Player";
-import Search from "./Search.jsx";
-import Overview from "./Overview.jsx";
-import { useEffect } from "react";
+import Player from './Player';
+import Search from './Search.jsx';
+import Overview from './Overview.jsx';
+import { useEffect } from 'react';
 
 function App() {
   const [podcasts, setPodcasts] = useState({});
-  const [ratings, setRatings] = useState({});
+  const [ratings, setRatings] = useState([]);
   const [activePodcast, setActivePodcast] = useState(null);
   const [activeTitle, setActiveTitle] = useState(null);
-  const [queryText, setQueryText] = useState("");
-
+  const [queryText, setQueryText] = useState('');
+  const rate = (number, guid) => {
+    const newRatings = [{ guid: guid, rating: number }, ...ratings];
+    // stack overflow. array met unieke object-id's:
+    // https://stackoverflow.com/a/49288758
+    let uniqIds = {};
+    setRatings(
+      newRatings.filter(
+        (obj) => !uniqIds[obj.guid] && (uniqIds[obj.guid] = true)
+      )
+    );
+  };
   useEffect(() => {
-    fetch("http://localhost:3001/api/podcasts", {
-      mode: "cors",
+    fetch('http://localhost:3001/api/podcasts', {
+      mode: 'cors',
     })
       .then((result) => result.json())
       .then((data) => setPodcasts(data))
@@ -23,8 +33,8 @@ function App() {
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:3001/api/ratings", {
-      mode: "cors",
+    fetch('http://localhost:3001/api/ratings', {
+      mode: 'cors',
     })
       .then((result) => result.json())
       .then((data) => setRatings(data))
@@ -43,6 +53,7 @@ function App() {
           setActivePodcast={(newPC) => setActivePodcast(newPC)}
           setActiveTitle={(title) => setActiveTitle(title)}
           ratings={ratings}
+          rate={rate}
           podcasts={podcasts}
           queryText={queryText}
         />
