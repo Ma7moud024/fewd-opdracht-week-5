@@ -28,3 +28,29 @@ export const EmptyPodcastRow = {
     },
   },
 };
+
+const rateSpy = fn(() => 0);
+const selectPodSpy = fn((podcast) => 0);
+
+export const PodcastRowWithEpisode = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(
+      canvasElement.querySelector('#rating-5-WO_AT_20195346'),
+      {
+        delay: 500,
+      }
+    );
+    expect(rateSpy).toBeCalled();
+
+    await userEvent.click(canvas.getByText(episode.title[0]));
+    expect(selectPodSpy).toBeCalled();
+    expect(selectPodSpy).toHaveBeenCalledWith(episode);
+  },
+  args: {
+    episode: episode,
+    podcast: podcast,
+    rate: rateSpy,
+    selectEpisode: selectPodSpy,
+  },
+};

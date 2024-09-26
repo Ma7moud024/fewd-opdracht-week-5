@@ -1,4 +1,4 @@
-import "./Search.css";
+import './Search.css';
 
 export default function Search({ queryText, setQueryText }) {
   return (
