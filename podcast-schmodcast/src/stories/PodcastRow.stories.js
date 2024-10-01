@@ -52,5 +52,6 @@ export const PodcastRowWithEpisode = {
     podcast: podcast,
     rate: rateSpy,
     selectEpisode: selectPodSpy,
+    selectActiveTitle: fn(),
   },
 };
