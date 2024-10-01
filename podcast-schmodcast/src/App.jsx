@@ -4,13 +4,30 @@ import './App.css';
 import Player from './Player';
 import Search from './Search.jsx';
 import Overview from './Overview.jsx';
-import { useEffect } from 'react';
+import { getPodcasts, getRatings } from './api.js';
+
+import { useLoaderData, useParams } from 'react-router-dom';
+
+export async function loader() {
+  const podcasts = await getPodcasts();
+  const ratings = await getRatings();
+  return { podcasts, ratings };
+}
 
 function App() {
-  const [podcasts, setPodcasts] = useState({});
-  const [ratings, setRatings] = useState([]);
-  const [activePodcast, setActivePodcast] = useState(null);
-  const [activeTitle, setActiveTitle] = useState(null);
+  const { podcasts, ratings } = useLoaderData();
+
+  const { podcastTitle, episodeId } = useParams();
+
+  let episodeFromURL,
+    podcastFromURL = null;
+  if (podcastTitle && episodeId) {
+    episodeFromURL = podcasts[podcastTitle].channel.item.find(
+      (eps) => eps.guid == episodeId
+    );
+    podcastFromURL = podcasts[podcastTitle].channel;
+  }
+
   const [queryText, setQueryText] = useState('');
   const rate = (number, guid) => {
     const newRatings = [{ guid: guid, rating: number }, ...ratings];
@@ -23,23 +40,6 @@ function App() {
       )
     );
   };
-  useEffect(() => {
-    fetch('http://localhost:3001/api/podcasts', {
-      mode: 'cors',
-    })
-      .then((result) => result.json())
-      .then((data) => setPodcasts(data))
-      .catch((err) => console.error(err));
-  }, []);
-
-  useEffect(() => {
-    fetch('http://localhost:3001/api/ratings', {
-      mode: 'cors',
-    })
-      .then((result) => result.json())
-      .then((data) => setRatings(data))
-      .catch((err) => console.error(err));
-  }, []);
 
   return (
     <>
@@ -47,11 +47,9 @@ function App() {
         <h1>Podcast Schmodcast</h1>
       </header>
       <main>
-        <Player activePodcast={activePodcast} activeTitle={activeTitle} />
+        <Player activePodcast={episodeFromURL} activeTitle={podcastFromURL} />
         <Search queryText={queryText} setQueryText={setQueryText} />
         <Overview
-          setActivePodcast={(newPC) => setActivePodcast(newPC)}
-          setActiveTitle={(title) => setActiveTitle(title)}
           ratings={ratings}
           rate={rate}
           podcasts={podcasts}

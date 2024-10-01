@@ -2,13 +2,15 @@ import { useState, useRef } from 'react';
 import './Player.css';
 
 export default function Player({ activePodcast, activeTitle }) {
+  console.log(activeTitle.image);
   const styles = {
     backgroundImage:
       'url(https://i.scdn.co/image/85a2d1e1d14c33eb6a67f933de336e6e7bf24dd4)',
   };
   let audioSrc, podTitle, episodeTitle;
   if (activePodcast) {
-    styles['background-image'] = `url(${activeTitle.image.url}`;
+    console.log(activeTitle.image[0].url);
+    styles['backgroundImage'] = `url(${activeTitle.image[0].url}`;
     audioSrc = activePodcast.link;
     podTitle = activePodcast.title[0];
     episodeTitle = activeTitle.title;

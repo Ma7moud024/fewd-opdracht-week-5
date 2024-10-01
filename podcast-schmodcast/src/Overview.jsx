@@ -29,6 +29,7 @@ export default function Overview({
               <PodcastRow
                 selectEpisode={setActivePodcast}
                 setActiveTitle={setActiveTitle}
+                title={p}
                 rating={ratings.find((rating) => e.guid == rating.guid)}
                 episode={e}
                 rate={rate}

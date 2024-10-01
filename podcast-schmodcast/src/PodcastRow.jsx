@@ -1,20 +1,7 @@
 import Star from './Star';
+import { Link } from 'react-router-dom';
 
-export default function PodcastRow({
-  episode,
-  podcast,
-  rating,
-  selectEpisode,
-  setActiveTitle,
-  rate,
-}) {
-  const clickEpisode = (e) => {
-    e.preventDefault();
-    console.log(episode);
-    selectEpisode(episode);
-    setActiveTitle(podcast);
-  };
-
+export default function PodcastRow({ episode, podcast, rating, rate, title }) {
   // moeilijk om goed uit te werken
   let ratingStars = [];
   for (let i = 0; i < 5; i++) {
@@ -34,9 +21,9 @@ export default function PodcastRow({
   return (
     <tr>
       <td>
-        <a role="option" onClick={clickEpisode}>
+        <Link role="option" to={`${title}/${episode.guid}`}>
           {episode.title[0]}
-        </a>
+        </Link>
       </td>
       <td>{podcast.title}</td>
       <td>{episode.pubDate}</td>
