@@ -15,8 +15,11 @@ const title = 'Episode Title';
 
 export const EmptyPodcastRow = {
   play: async ({ canvasElement }) => {
+    // arrange
     const canvas = within(canvasElement);
     const podcastrow = canvas.getByRole('option');
+
+    // assert
     expect(podcastrow.innerHTML).toBe(title);
   },
   args: {
