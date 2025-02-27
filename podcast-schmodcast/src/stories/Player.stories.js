@@ -15,10 +15,19 @@ export const EmptyPlayer = {};
 
 export const PlayerWithEpisode = {
   play: async ({ canvasElement }) => {
+    // arrange, zet alle dingen klaar voor testen
     const canvas = within(canvasElement);
+
+    // act, reageer op elementen
     await userEvent.click(canvas.getByRole('button'), { delay: 1000 });
+
+    // assert, verifieer of het gewenste gedrag optreedt
     expect(canvas.getByRole('button').innerHTML).toBe('⏸️');
+
+    // act
     await userEvent.click(canvas.getByRole('button'), { delay: 500 });
+
+    // assert
     expect(canvas.getByRole('button').innerHTML).toBe('▶️');
   },
   args: {
