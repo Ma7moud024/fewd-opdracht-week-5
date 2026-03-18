@@ -1,12 +1,12 @@
-import { useState } from 'react';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
 
-import Player from './Player';
-import Search from './Search.jsx';
-import Overview from './Overview.jsx';
-import { getPodcasts, getRatings } from './api.js';
+import Player from "./Player";
+import Search from "./Search.jsx";
+import Overview from "./Overview.jsx";
+import { getPodcasts, getRatings } from "./api.js";
 
-import { useLoaderData, useParams } from 'react-router-dom';
+import { useLoaderData, useParams } from "react-router-dom";
 
 export async function loader() {
   const podcasts = await getPodcasts();
@@ -23,12 +23,13 @@ function App() {
     podcastFromURL = null;
   if (podcastTitle && episodeId) {
     episodeFromURL = podcasts[podcastTitle].channel.item.find(
-      (eps) => eps.guid == episodeId
+      (eps) => eps.guid == episodeId,
     );
     podcastFromURL = podcasts[podcastTitle].channel;
   }
 
-  const [queryText, setQueryText] = useState('');
+  // const [queryText, setQueryText] = useState('');
+
   const rate = (number, guid) => {
     const newRatings = [{ guid: guid, rating: number }, ...ratings];
     // stack overflow. array met unieke object-id's:
@@ -36,8 +37,8 @@ function App() {
     let uniqIds = {};
     setRatings(
       newRatings.filter(
-        (obj) => !uniqIds[obj.guid] && (uniqIds[obj.guid] = true)
-      )
+        (obj) => !uniqIds[obj.guid] && (uniqIds[obj.guid] = true),
+      ),
     );
   };
 
@@ -48,13 +49,8 @@ function App() {
       </header>
       <main>
         <Player activePodcast={episodeFromURL} activeTitle={podcastFromURL} />
-        <Search queryText={queryText} setQueryText={setQueryText} />
-        <Overview
-          ratings={ratings}
-          rate={rate}
-          podcasts={podcasts}
-          queryText={queryText}
-        />
+        <Search />
+        <Overview ratings={ratings} rate={rate} podcasts={podcasts} />
       </main>
     </>
   );

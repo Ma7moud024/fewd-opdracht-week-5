@@ -1,13 +1,18 @@
-import PodcastRow from './PodcastRow';
-
+import PodcastRow from "./PodcastRow";
+import { useSearchParams } from "react-router-dom";
 export default function Overview({
   podcasts,
   setActivePodcast,
   setActiveTitle,
-  queryText,
   ratings,
   rate,
 }) {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const queryText = searchParams.get("search")
+    ? searchParams.get("search")
+    : "";
+
   return (
     <table>
       <thead>
@@ -22,7 +27,7 @@ export default function Overview({
         {Object.keys(podcasts).map((p) =>
           podcasts[p].channel.item
             .filter((i) =>
-              i.title[0].toUpperCase().includes(queryText.toUpperCase())
+              i.title[0].toUpperCase().includes(queryText.toUpperCase()),
             )
             .slice(0, 34)
             .map((e) => (
@@ -39,7 +44,7 @@ export default function Overview({
                   image: podcasts[p].channel.image[0],
                 }}
               />
-            ))
+            )),
         )}
       </tbody>
     </table>
